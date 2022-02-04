@@ -18,16 +18,27 @@
 # Nana
 # add_subdirectory(nana)
 
-find_package(fmt CONFIG)
-find_package(spdlog CONFIG)
-find_package(docopt CONFIG)
+# find_package(fmt CONFIG)
+# find_package(spdlog CONFIG)
+# find_package(docopt CONFIG)
 
-# Generic test that uses conan libs
-add_executable(intro main.cpp)
+include(FetchContent)
+
+FetchContent_Declare(fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG master
+)
+FetchContent_MakeAvailable(fmt)
+
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG        v1.x
+)
+FetchContent_MakeAvailable(spdLog)
+
+add_executable(eir main.cpp)
 target_link_libraries(
-  intro
-  PRIVATE project_options
-          project_warnings
-          docopt::docopt
-          fmt::fmt
+  eir
+  PRIVATE fmt::fmt
           spdlog::spdlog)

@@ -7,10 +7,10 @@ RUN apt-get update -qq && \
         python3 python3-pip doxygen graphviz ccache cppcheck build-essential \
         neovim emacs nano
 
-# Install conan
-RUN python3 -m pip install --upgrade pip setuptools && \
-    python3 -m pip install conan && \
-    conan --version
+# # Install conan
+# RUN python3 -m pip install --upgrade pip setuptools && \
+#     python3 -m pip install conan && \
+#     conan --version
 
 # User-settable versions:
 # This Dockerfile should support gcc-[7, 8, 9, 10] and clang-[10, 11]
@@ -91,10 +91,10 @@ ENV CONAN_SYSREQUIRES_SUDO 0
 # Some packages request that Conan use the system package manager to install
 # a few dependencies. This flag allows Conan to proceed with these installations;
 # leaving this flag undefined can cause some installation failures.
-ENV CONAN_SYSREQUIRES_MODE enabled
+ENV CONAN_SYSREQUIRES_MODE disabled
 
 # Include project
-ADD . /starter_project
-WORKDIR /starter_project
+ADD . /eir
+WORKDIR /eir
 
 CMD ["/bin/bash"]

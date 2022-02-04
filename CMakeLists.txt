@@ -13,20 +13,7 @@ set(CMAKE_CXX_STANDARD 20)
 # when compiling with PCH enabled
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Add project_options v0.14.2
-# https://github.com/cpp-best-practices/project_options
-include(FetchContent)
-FetchContent_Declare(_project_options
-                     URL https://github.com/cpp-best-practices/project_options/archive/refs/tags/v0.14.2.zip)
-FetchContent_MakeAvailable(_project_options)
-include(${_project_options_SOURCE_DIR}/Index.cmake)
-
-# uncomment to enable vcpkg:
-# # Setup vcpkg - should be called before defining project()
-# run_vcpkg()
-
-# Set the project name and language
-project(myproject LANGUAGES CXX C)
+project(eir LANGUAGES CXX C)
 
 get_property(BUILDING_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 if(BUILDING_MULTI_CONFIG)
@@ -43,58 +30,21 @@ if(BUILDING_MULTI_CONFIG)
         MinSizeRel
         CACHE STRING "Enabled build types" FORCE)
   else()
-    message(TRACE "User chose a specific build type, so we are using that")
+    message(TRACE "User choose a specific build type, so we are using that")
     set(CMAKE_CONFIGURATION_TYPES
         ${CMAKE_BUILD_TYPE}
         CACHE STRING "Enabled build types" FORCE)
   endif()
 endif()
 
-include(${_project_options_SOURCE_DIR}/src/DynamicProjectOptions.cmake)
-
-# defaulted_project_options sets recommended defaults and provides user and developer
-# modes and full GUI support for choosing options at configure time
-
-# for more flexibility, look into project_options() macro
-
-# Any default can be overridden
-# set(<feature_name>_DEFAULT <value>) - set default for both user and developer modes
-# set(<feature_name>_DEVELOPER_DEFAULT <value>) - set default for developer mode
-# set(<feature_name>_USER_DEFAULT <value>) - set default for user mode
-
-# Initialize project_options variable related to this project
-# This overwrites `project_options` and sets `project_warnings`
-# uncomment the options to enable them:
-dynamic_project_options(
-  # Note: PCH is disabled by default in developer mode because these headers become
-  # globally included and they can mask other errors
-  PCH_HEADERS
-  <vector>
-  <string> # This is a list of headers to pre-compile, here are some common ones
-  # CONAN_OPTIONS  # Extra options to pass to conan
-  # MSVC_WARNINGS  # Override the defaults for the MSVC warnings
-  # CLANG_WARNINGS # Override the defaults for the CLANG warnings
-  # GCC_WARNINGS   # Override the defaults for the GCC warnings
-)
-
-target_compile_features(project_options INTERFACE cxx_std_${CMAKE_CXX_STANDARD})
-
-# Adding the src:
 add_subdirectory(src)
 
-# Adding the tests:
 option(ENABLE_TESTING "Enable the tests" ON)
 if(ENABLE_TESTING)
   enable_testing()
   message("Building Tests. Be sure to check out test/constexpr_tests for constexpr
 testing")
   add_subdirectory(test)
-endif()
-
-option(ENABLE_FUZZING "Enable the fuzz tests" OFF)
-if(ENABLE_FUZZING)
-  message("Building Fuzz Tests, using fuzzing sanitizer https://www.llvm.org/docs/LibFuzzer.html")
-  add_subdirectory(fuzz_test)
 endif()
 
 # If MSVC is being used, and ASAN is enabled, we need to set the debugger environment
@@ -105,4 +55,4 @@ if(MSVC)
 endif()
 
 # set the startup project for the "play" button in MSVC
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT intro)
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT eir)

@@ -1,56 +1,34 @@
-# cpp_starter_project
+# Embedded Intent Recognizer
 
-![CI](https://github.com/cpp-best-practices/cpp_starter_project/workflows/ci/badge.svg)
-[![codecov](https://codecov.io/gh/cpp-best-practices/cpp_starter_project/branch/main/graph/badge.svg)](https://codecov.io/gh/cpp-best-practices/cpp_starter_project)
-[![Language grade: C++](https://img.shields.io/lgtm/grade/cpp/github/cpp-best-practices/cpp_starter_project)](https://lgtm.com/projects/g/cpp-best-practices/cpp_starter_project/context:cpp)
-
-## Getting Started
-
-### Use the Github template
-First, click the green `Use this template` button near the top of this page.
-This will take you to Github's ['Generate Repository'](https://github.com/cpp-best-practices/cpp_starter_project/generate) page.
-Fill in a repository name and short description, and click 'Create repository from template'.
-This will allow you to create a new repository in your Github account,
-prepopulated with the contents of this project.
-Now you can clone the project locally and get to work!
-
-    git clone https://github.com/<user>/<your_new_repo>.git
-
-### Remove frameworks you're not going to use
-If you know you're not going to use one or more of the optional gui/graphics
-frameworks (fltk, gtkmm, imgui, etc.), you can remove them with `git rm`:
-
-    git rm -r src/<unnecessary_framework>
-
-## Dependencies
-
-Note about install commands:
-- for Windows, we use [choco](https://chocolatey.org/install).
-- for MacOS, we use [brew](https://brew.sh/).
-- In case of an error in cmake, make sure that the dependencies are on the PATH.
+Small intent recognition command line tool.
 
 
-### Too Long, Didn't Install
+## Repository
 
-This is a really long list of dependencies, and it's easy to mess up. That's why:
+[Repository](https://github.com/gregorgrisza/eir)
+
+```
+git clone git@github.com:gregorgrisza/eir.git
+```
+
+
+## Example:
+
+```
+What is the weather like today? => Prints (Intent: Get Weather)
+What is the weather like in Paris today? => Prints (Intent: Get Weather City)
+Tell me an interesting fact. => Prints (Intent: Get Fact)
+```
 
 #### Docker
 We have a Docker image that's already set up for you. See the [Docker instructions](#docker-instructions).
 
-#### Setup-cpp
+#### Setup
 
 We have [setup-cpp](https://github.com/aminya/setup-cpp) that is a cross-platform tool to install all the compilers and dependencies on the system.
 
 Please check [the setup-cpp documentation](https://github.com/aminya/setup-cpp) for more information.
 
-For example, on Windows, you can run the following to install llvm, cmake, ninja, ccache, conan, and cppcheck.
-```ps1
-# windows example (open shell as admin)
-curl -LJO "https://github.com/aminya/setup-cpp/releases/download/v0.5.7/setup_cpp_windows.exe"
-./setup_cpp_windows --compiler llvm --cmake true --ninja true --ccache true --conan true --cppcheck true
-
-RefreshEnv.cmd # reload the environment
-```
 
 ### Necessary Dependencies
 1. A C++ compiler that supports C++17.
@@ -233,29 +211,6 @@ The following compilers should work:
 	https://github.com/include-what-you-use/include-what-you-use#how-to-install
 	</details>
 
-#### GUI libraries
-This project can be made to work with several optional GUI frameworks.
-
-If desired, you should install the following optional dependencies as
-directed by their documentation, linked here:
-
-- [FLTK](https://www.fltk.org/doc-1.4/index.html)
-- [GTKMM](https://www.gtkmm.org/en/documentation.html)
-- [QT](https://doc.qt.io/)
-
-The following dependencies can be downloaded automatically by CMake and Conan.
-All you need to do to install them is to turn on a CMake flag during
-configuration.
-If you run into difficulty using them, please refer to their documentation,
-linked here:
-
-- [NANA](http://nanapro.org/en-us/documentation/)
-- [SDL](http://wiki.libsdl.org/FrontPage)
-- [IMGUI](https://github.com/ocornut/imgui/tree/master/docs):
-  This framework depends on SFML, and if you are using Linux, you may need
-  to install several of SFML's dependencies using your package manager. See
-  [the SFML build tutorial](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
-  for specifics.
 
 ## Build Instructions
 
@@ -344,161 +299,15 @@ CMake will detect which compiler was used to build each of the Conan targets. If
 
 ### (2) Configure your build
 
-To configure the project, you could use `cmake`, or `ccmake` or `cmake-gui`. Each of them are explained in the following:
-
-#### (2.a) Configuring via cmake:
-With Cmake directly:
+To configure the project, you could use `cmake`
 
     cmake -S . -B ./build
 
 Cmake will automatically create the `./build` folder if it does not exist, and it wil configure the project.
 
-#### (2.b) Configuring via ccmake:
+or
+	mkdir build && cd build && cmake ..
 
-With the Cmake Curses Dialog Command Line tool:
-
-    ccmake -S . -B ./build
-
-Once `ccmake` has finished setting up, press 'c' to configure the project,
-press 'g' to generate, and 'q' to quit.
-
-#### (2.c) Configuring via cmake-gui:
-
-To use the GUI of the cmake:
-
-2.c.1) Open cmake-gui from the project directory:
-```
-cmake-gui .
-```
-2.c.2) Set the build directory:
-
-![build_dir](https://user-images.githubusercontent.com/16418197/82524586-fa48e380-9af4-11ea-8514-4e18a063d8eb.jpg)
-
-2.c.3) Configure the generator:
-
-In cmake-gui, from the upper menu select `Tools/Configure`.
-
-**Warning**: if you have set `CC` and `CXX` always choose the `use default native compilers` option. This picks `CC` and `CXX`. Don't change the compiler at this stage!
-
-<details>
-<summary>Windows - MinGW Makefiles</summary>
-
-Choose MinGW Makefiles as the generator:
-
-<img src="https://user-images.githubusercontent.com/16418197/82769479-616ade80-9dfa-11ea-899e-3a8c31d43032.png" alt="mingw">
-
-</details>
-
-<details>
-<summary>Windows - Visual Studio generator and compiler</summary>
-
-You should have already set `C` and `CXX` to `cl.exe`.
-
-Choose "Visual Studio 16 2019" as the generator:
-
-<img src="https://user-images.githubusercontent.com/16418197/82524696-32502680-9af5-11ea-9697-a42000e900a6.jpg" alt="default_vs">
-
-</details>
-
-<details>
-
-<summary>Windows - Visual Studio generator and Clang Compiler</summary>
-
-You should have already set `C` and `CXX` to `clang.exe` and `clang++.exe`.
-
-Choose "Visual Studio 16 2019" as the generator. To tell Visual studio to use `clang-cl.exe`:
-- If you use the LLVM that is shipped with Visual Studio: write `ClangCl` under "optional toolset to use".
-
-<img src="https://user-images.githubusercontent.com/16418197/82781142-ae60ac00-9e1e-11ea-8c77-222b005a8f7e.png" alt="visual_studio">
-
-- If you use an external LLVM: write [`LLVM_v142`](https://github.com/zufuliu/llvm-utils#llvm-for-visual-studio-2017-and-2019)
- under "optional toolset to use".
-
-<img src="https://user-images.githubusercontent.com/16418197/82769558-b3136900-9dfa-11ea-9f73-02ab8f9b0ca4.png" alt="visual_studio">
-
-</details>
-<br/>
-
-2.c.4) Choose the Cmake options and then generate:
-
-![generate](https://user-images.githubusercontent.com/16418197/82781591-c97feb80-9e1f-11ea-86c8-f2748b96f516.png)
-
-### (3) Build the project
-Once you have selected all the options you would like to use, you can build the
-project (all targets):
-
-    cmake --build ./build
-
-For Visual Studio, give the build configuration (Release, RelWithDeb, Debug, etc) like the following:
-
-    cmake --build ./build -- /p:configuration=Release
-
-
-### Running the tests
-
-You can use the `ctest` command run the tests.
-
-```shell
-cd ./build
-ctest -C Debug
-cd ../
-```
-
-## Troubleshooting
-
-### Update Conan
-Many problems that users have can be resolved by updating Conan, so if you are
-having any trouble with this project, you should start by doing that.
-
-To update conan:
-
-    pip install --user --upgrade conan
-
-You may need to use `pip3` instead of `pip` in this command, depending on your
-platform.
-
-### Clear Conan cache
-If you continue to have trouble with your Conan dependencies, you can try
-clearing your Conan cache:
-
-    conan remove -f '*'
-
-The next time you run `cmake` or `cmake --build`, your Conan dependencies will
-be rebuilt. If you aren't using your system's default compiler, don't forget to
-set the CC, CXX, CMAKE_C_COMPILER, and CMAKE_CXX_COMPILER variables, as
-described in the 'Build using an alternate compiler' section above.
-
-### Identifying misconfiguration of Conan dependencies
-
-If you have a dependency 'A' that requires a specific version of another
-dependency 'B', and your project is trying to use the wrong version of
-dependency 'B', Conan will produce warnings about this configuration error
-when you run CMake. These warnings can easily get lost between a couple
-hundred or thousand lines of output, depending on the size of your project.
-
-If your project has a Conan configuration error, you can use `conan info` to
-find it. `conan info` displays information about the dependency graph of your
-project, with colorized output in some terminals.
-
-    cd build
-    conan info .
-
-In my terminal, the first couple lines of `conan info`'s output show all of the
-project's configuration warnings in a bright yellow font.
-
-For example, the package `spdlog/1.5.0` depends on the package `fmt/6.1.2`.
-If you were to modify the file `conanfile.py` so that it requires an
-earlier version of `fmt`, such as `fmt/6.0.0`, and then run:
-
-```bash
-conan remove -f '*'       # clear Conan cache
-rm -rf build              # clear previous CMake build
-cmake -S . -B ./build     # rebuild Conan dependencies
-conan info ./build
-```
-
-...the first line of output would be a warning that `spdlog` needs a more recent
-version of `fmt`.
 
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)

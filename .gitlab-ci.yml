@@ -7,7 +7,7 @@ stages:
   DEBIAN_FRONTEND=noninteractive
 
   # set time-zone
-  TZ=Canada/Pacific
+  TZ=Europe/Berlin
   ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
   # for downloading
@@ -22,7 +22,7 @@ stages:
 .setup_cpp: &setup_cpp |
   curl -LJO "https://github.com/aminya/setup-cpp/releases/download/v0.5.8/setup_cpp_linux"
   chmod +x setup_cpp_linux
-  ./setup_cpp_linux --compiler $compiler --cmake true --ninja true  --conan true --ccache true
+  ./setup_cpp_linux --compiler $compiler --cmake true --ninja true  --ccache true
   source ~/.profile
 
 .test: &test |
