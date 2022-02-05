@@ -37,7 +37,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdLog)
 
-add_executable(eir main.cpp)
+set(TARGET_SOURCES 
+    recognizer.hpp
+    recognizer.cpp
+    main.cpp)
+
+add_executable(eir ${TARGET_SOURCES})
 target_link_libraries(
   eir
   PRIVATE fmt::fmt
