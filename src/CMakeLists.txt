@@ -1,26 +1,5 @@
-# uncomment to enable the gui examples
-
-# sdl
-# add_subdirectory(sdl)
-
-# qt
-# add_subdirectory(qt)
-
-# fltk test
-# add_subdirectory(fltk)
-
-# gtkmm test
-# add_subdirectory(gtkmm)
-
-# imgui example
-# add_subdirectory(imgui)
-
-# Nana
-# add_subdirectory(nana)
-
-# find_package(fmt CONFIG)
-# find_package(spdlog CONFIG)
-# find_package(docopt CONFIG)
+add_subdirectory(model)
+add_subdirectory(learning)
 
 include(FetchContent)
 
@@ -37,13 +16,37 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdLog)
 
-set(TARGET_SOURCES 
-    recognizer.hpp
-    recognizer.cpp
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.10.5/json.tar.xz
+)
+
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+    FetchContent_Populate(json)
+    add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
+FetchContent_MakeAvailable(json)
+
+set(TARGET_SOURCES
     main.cpp)
 
 add_executable(eir ${TARGET_SOURCES})
+
+target_link_libraries(
+  eir
+  PRIVATE
+  nlohmann_json::nlohmann_json)
+
+target_link_libraries (
+  eir
+  LINK_PUBLIC learning
+              model)
+
 target_link_libraries(
   eir
   PRIVATE fmt::fmt
           spdlog::spdlog)
+
+target_compile_features(eir PUBLIC cxx_std_17)

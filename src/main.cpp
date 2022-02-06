@@ -1,11 +1,14 @@
 #include <functional>
 #include <iostream>
+#include <filesystem>
 #include "spdlog/spdlog.h"
-#include "recognizer.hpp"
+#include "learning/Preprocessor.hpp"
+#include "learning/Reader.hpp"
+#include <nlohmann/json.hpp>
 
 int main(int argc, const char **argv)
 {
-  bool nextQuestion = true;
+  bool nextQuestion = false;
 
   while (nextQuestion)
   {
@@ -16,21 +19,28 @@ int main(int argc, const char **argv)
       nextQuestion = false;
     }
 
-    std::shared_ptr<Recognizer> recognizer = std::make_shared<Recognizer>();
+    // std::shared_ptr<Preprocessor> recognizer = std::make_shared<Preprocessor>();
     std::cout << "Is this what you really want? : " << sentence << "\n";
-    recognizer->preprocess(sentence);
-    recognizer->normalize(sentence);
-    auto tokens = recognizer->tokenize(sentence);
+    Preprocessor::normalize(sentence);
+    auto tokens = Preprocessor::tokenize(sentence);
 
     for (auto token : tokens)
     {
       spdlog::info(token);
     }
     spdlog::info("-------");
-    for (auto token : recognizer->sanitize(tokens))
+    for (auto token : Preprocessor::sanitize(tokens))
     {
       spdlog::info(token);
     }
+  }
+
+
+  std::shared_ptr<Reader> reader = std::make_shared<Reader>();
+  const auto dir = std::filesystem::current_path();
+  const auto file = "data/train_data.json";
+  if (std::filesystem::exists(file)) {
+    reader->read(file);
   }
 
   spdlog::info("Bye Bye!");
