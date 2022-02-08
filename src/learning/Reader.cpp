@@ -15,8 +15,9 @@ std::vector<LearnIntentData> Reader::read(std::string file) {
         LearnIntentData learnIntentData;
         learnIntentData.Intent = item["intent"];
         for( const auto &input : item["input"]) {
-            std::cout << std::endl;
-            GetEntities(learnIntentData.EntitiesConfigurations, input.get<std::string>());
+            std::string sentence;
+            GetEntities(learnIntentData.EntitiesConfigurations, sentence, input.get<std::string>());
+            learnIntentData.Input.push_back(sentence);
         }
         learnIntentDatas.push_back(learnIntentData);
     }
@@ -24,7 +25,7 @@ std::vector<LearnIntentData> Reader::read(std::string file) {
     return learnIntentDatas;
 }
 
-void Reader::GetEntities(std::map<std::string, std::string>& entitiesBuilders, std::string input) {
+void Reader::GetEntities(std::map<std::string, std::string>& entitiesBuilders, std::string& sentence, std::string input) {
     const std::regex expression("\\[([A-Za-z']+)\\]\\(([A-Za-z]*)\\)");
     std::smatch matches;
 
@@ -34,7 +35,10 @@ void Reader::GetEntities(std::map<std::string, std::string>& entitiesBuilders, s
         const std::string second = matches[2].str();
 
         entitiesBuilders.insert( std::make_pair(second, first) );
-        input.erase(input.find(full), full.length());
-        GetEntities(entitiesBuilders, input);
+
+        input.replace(input.find(full), full.length(), first);
+        GetEntities(entitiesBuilders, sentence, input);
+    } else {
+        sentence = input;
     }
 }

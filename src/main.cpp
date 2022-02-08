@@ -1,10 +1,13 @@
 #include <functional>
 #include <iostream>
 #include <filesystem>
+#include <nlohmann/json.hpp>
+
 #include "spdlog/spdlog.h"
 #include "learning/Preprocessor.hpp"
 #include "learning/Reader.hpp"
-#include <nlohmann/json.hpp>
+#include "learning/Analyzer.hpp"
+
 
 int main(int argc, const char **argv)
 {
@@ -40,7 +43,7 @@ int main(int argc, const char **argv)
   const auto dir = std::filesystem::current_path();
   const auto file = "data/train_data.json";
   if (std::filesystem::exists(file)) {
-    reader->read(file);
+    Analyzer().analyze(reader->read(file));
   }
 
   spdlog::info("Bye Bye!");

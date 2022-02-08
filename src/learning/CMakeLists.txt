@@ -19,6 +19,8 @@ set(TARGET_SOURCES
     LearnIntentData.cpp
     Preprocessor.hpp
     Preprocessor.cpp
+    Analyzer.hpp
+    Analyzer.cpp
     Reader.hpp
     Reader.cpp)
 
