@@ -10,7 +10,8 @@
     {
         "input" :
             [
-                "Tell me an interesting [fact](Fact)."
+                "Tell me an interesting fact.",
+                "Tell me the [news](Information)."
             ],
         "intent" : "Get Fact"
     }
