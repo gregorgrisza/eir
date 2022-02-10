@@ -25,10 +25,63 @@ void Analyzer::analyze(std::vector<LearnIntentData> const& data) {
             sumOfStrengths += strength;
         }
 
+        m_popularity[word.first] = sumOfStrengths / m_intents.size();
+
         for (auto intent : m_intents) {
-            m_globalWordStrengths[intent][word.first] = localStrengths[intent] / sumOfStrengths;
+            m_globalWordStrengths[word.first][intent] = localStrengths[intent] / sumOfStrengths;
         }
     }
+}
+
+std::string Analyzer::predict(std::string const& sentence) {
+    std::string winnerIntent;
+    std::string sentenceCopy = sentence;
+    Preprocessor::normalize(sentenceCopy);
+    auto const words = Preprocessor::sanitize(Preprocessor::tokenize(sentenceCopy));
+    std::map<std::string, std::map<std::string, float>> intentWordRating;
+    std::map<std::string, float> intentRating;
+    for (auto word : words) {
+        auto importance = 1 - m_popularity[word];
+        if ( m_bows.contains(word) ) {
+            for (auto intent : m_intents) {
+                auto rating = m_globalWordStrengths[word][intent] * importance;
+                intentWordRating[intent][word] += rating;
+
+                // TODO: try: consider here using localWordStrength to decrease global importance and rating
+                //   but it might have negative influence on important words - test it
+
+                intentRating[intent] += rating;
+            }
+        }
+    }
+
+    // TODO: try: find unique words, which exist only in one intent, so others could be ignored (?)
+
+    return getKeyWithMaxValue(intentRating);
+}
+
+//TODO: move templated to utilities
+std::string Analyzer::getKeyWithMaxValue(std::map<std::string, float> const& valuesMap) {
+    if (valuesMap.empty()) {
+        return "";
+    }
+
+    std::vector<std::pair<std::string, float>> vec;
+    std::copy(valuesMap.begin(),
+            valuesMap.end(),
+            std::back_inserter<std::vector<std::pair<std::string, float>>>(vec));
+
+    std::sort(vec.begin(), vec.end(),
+            [](const std::pair<std::string, float> &l, const std::pair<std::string, float> &r)
+            {
+                if (l.second != r.second) {
+                    return l.second > r.second;
+                }
+
+                return l.first > r.first;
+            });
+
+    return vec[0].first;
 }
 
 float Analyzer::localStrength(std::string intent, std::string word) {
