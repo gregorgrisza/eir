@@ -11,7 +11,8 @@
         "input" :
             [
                 "Tell me an interesting fact.",
-                "Tell me the [news](Information)."
+                "Tell me the [news](Information).",
+                "What is the fact?"
             ],
         "intent" : "Get Fact"
     }
