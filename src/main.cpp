@@ -11,40 +11,21 @@
 
 int main(int argc, const char **argv)
 {
-  bool nextQuestion = false;
 
-  while (nextQuestion)
-  {
-    std::string sentence;
-    std::cout << "What can I do for you?\n";
-    std::getline(std::cin, sentence);
-    if ( sentence.compare("q") == 0) {
-      nextQuestion = false;
-    }
+  std::unique_ptr<Reader> reader = std::make_unique<Reader>();
 
-    // std::shared_ptr<Preprocessor> recognizer = std::make_shared<Preprocessor>();
-    std::cout << "Is this what you really want? : " << sentence << "\n";
-    Preprocessor::normalize(sentence);
-    auto tokens = Preprocessor::tokenize(sentence);
-
-    for (auto token : tokens)
-    {
-      spdlog::info(token);
-    }
-    spdlog::info("-------");
-    for (auto token : Preprocessor::sanitize(tokens))
-    {
-      spdlog::info(token);
-    }
-  }
-
-
-  std::shared_ptr<Reader> reader = std::make_shared<Reader>();
-  const auto dir = std::filesystem::current_path();
   const auto file = "data/train_data.json";
+  Analyzer analyzer = Analyzer();
   if (std::filesystem::exists(file)) {
-    Analyzer().analyze(reader->read(file));
+    analyzer.analyze(reader->read(file));
   }
 
-  spdlog::info("Bye Bye!");
+  std::string sentence;
+  while (std::getline(std::cin, sentence) && !sentence.empty())
+  {
+    std::cout << "\033[F" << sentence << " => " << analyzer.predict(sentence) << std::endl;
+  }
+
+  std:: cout << "Bye Bye!" << std::endl;
+  return 0;
 }
