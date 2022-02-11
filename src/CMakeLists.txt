@@ -50,5 +50,3 @@ target_link_libraries(
   eir
   PRIVATE fmt::fmt
           spdlog::spdlog)
-
-target_compile_features(eir PUBLIC cxx_std_17)
