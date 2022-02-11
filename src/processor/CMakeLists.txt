@@ -15,8 +15,8 @@ endif()
 FetchContent_MakeAvailable(json)
 
 set(TARGET_SOURCES
-    LearnIntentData.hpp
-    LearnIntentData.cpp
+    IntentDefinition.hpp
+    IntentDefinition.cpp
     Preprocessor.hpp
     Preprocessor.cpp
     Analyzer.hpp

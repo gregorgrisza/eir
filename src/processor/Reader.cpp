@@ -5,24 +5,24 @@
 
 using json = nlohmann::json;
 
-std::vector<LearnIntentData> Reader::read(std::string file) {
+std::vector<IntentDefinition> Reader::read(std::string file) {
     std::ifstream data_stream(file);
     json json_data;
     data_stream >> json_data;
-    std::vector<LearnIntentData> learnIntentDatas;
+    std::vector<IntentDefinition> IntentDefinitions;
     for( const auto & item : json_data) {
         // std::cout << std::setw(4) << item << std::endl;
-        LearnIntentData learnIntentData;
-        learnIntentData.Intent = item["intent"];
+        IntentDefinition IntentDefinition;
+        IntentDefinition.Intent = item["intent"];
         for( const auto &input : item["input"]) {
             std::string sentence;
-            GetEntities(learnIntentData.EntitiesConfigurations, sentence, input.get<std::string>());
-            learnIntentData.Input.push_back(sentence);
+            GetEntities(IntentDefinition.EntitiesConfigurations, sentence, input.get<std::string>());
+            IntentDefinition.Input.push_back(sentence);
         }
-        learnIntentDatas.push_back(learnIntentData);
+        IntentDefinitions.push_back(IntentDefinition);
     }
 
-    return learnIntentDatas;
+    return IntentDefinitions;
 }
 
 void Reader::GetEntities(std::map<std::string, std::string>& entitiesBuilders, std::string& sentence, std::string input) {

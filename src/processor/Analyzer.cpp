@@ -3,7 +3,7 @@
 #include "Preprocessor.hpp"
 
 
-void Analyzer::analyze(std::vector<LearnIntentData> const& data) {
+void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
     for (auto item : data) {
         for (auto sentence : item.Input) {
             m_probes[item.Intent]++;

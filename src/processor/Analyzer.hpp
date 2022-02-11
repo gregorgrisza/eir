@@ -1,7 +1,7 @@
 #ifndef ANALYZER_H
 #define ANALYZER_H
 
-#include "LearnIntentData.hpp"
+#include "IntentDefinition.hpp"
 
 #include <set>
 
@@ -21,7 +21,7 @@ class Analyzer {
         void globalStrengths(std::string word);
 
     public:
-        void analyze(std::vector<LearnIntentData> const& data);
+        void analyze(std::vector<IntentDefinition> const& data);
 
         [[nodiscard("Intent must be consumed. If not found must be fallback returned.")]]
         std::string predict(std::string const& sentence);
