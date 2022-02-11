@@ -1,4 +1,5 @@
-add_subdirectory(model)
+add_subdirectory(model/entities)
+add_subdirectory(model/intents)
 add_subdirectory(processor)
 add_subdirectory(service)
 
@@ -42,8 +43,9 @@ target_link_libraries(
 
 target_link_libraries (
   eir
-  LINK_PUBLIC processor
-              model
+  LINK_PUBLIC entities
+              intents
+              processor
               service)
 
 target_link_libraries(

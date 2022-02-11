@@ -9,7 +9,8 @@ add_library(service
 target_link_libraries(
     service
     LINK_PUBLIC processor
-                model)
+                entities
+                intents)
 
 target_include_directories (
     service

@@ -3,7 +3,6 @@
 
 #include <string>
 #include <map>
-#include "../Action.hpp"
 
 class Intent {
     public:
@@ -12,7 +11,6 @@ class Intent {
 
         Intent(const std::map<std::string, std::string>& entitiesConfigurations);
 
-        Action Act;
         void execute();
 };
 
