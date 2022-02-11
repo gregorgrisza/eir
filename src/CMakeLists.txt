@@ -1,5 +1,6 @@
 add_subdirectory(model)
 add_subdirectory(processor)
+add_subdirectory(service)
 
 include(FetchContent)
 
@@ -42,7 +43,8 @@ target_link_libraries(
 target_link_libraries (
   eir
   LINK_PUBLIC processor
-              model)
+              model
+              service)
 
 target_link_libraries(
   eir

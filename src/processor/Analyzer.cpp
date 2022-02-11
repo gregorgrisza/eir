@@ -33,11 +33,9 @@ void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
     }
 }
 
-std::string Analyzer::predict(std::string const& sentence) {
+void Analyzer::predict(std::set<std::string> const& words, std::string& intent) {
     std::string winnerIntent;
-    std::string sentenceCopy = sentence;
-    Preprocessor::normalize(sentenceCopy);
-    auto const words = Preprocessor::sanitize(Preprocessor::tokenize(sentenceCopy));
+
     std::map<std::string, std::map<std::string, float>> intentWordRating;
     std::map<std::string, float> intentRating;
     for (auto word : words) {
@@ -54,10 +52,9 @@ std::string Analyzer::predict(std::string const& sentence) {
             }
         }
     }
-
     // TODO: try: find unique words, which exist only in one intent, so others could be ignored (?)
 
-    return getKeyWithMaxValue(intentRating);
+    intent = getKeyWithMaxValue(intentRating);
 }
 
 //TODO: move templated to utilities

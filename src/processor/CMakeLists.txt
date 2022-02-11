@@ -9,7 +9,7 @@ FetchContent_Declare(
 FetchContent_GetProperties(json)
 if(NOT json_POPULATED)
     FetchContent_Populate(json)
-    add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+    add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR})
 endif()
 
 FetchContent_MakeAvailable(json)
@@ -17,6 +17,8 @@ FetchContent_MakeAvailable(json)
 set(TARGET_SOURCES
     IntentDefinition.hpp
     IntentDefinition.cpp
+    EntityRecognizer.hpp
+    EntityRecognizer.cpp
     Preprocessor.hpp
     Preprocessor.cpp
     Analyzer.hpp

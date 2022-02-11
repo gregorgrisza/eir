@@ -1,8 +1,10 @@
+#ifndef READER_H
+#define READER_H
+
+
 #include <fstream>
-#include <nlohmann/json.hpp>
 #include "IntentDefinition.hpp"
 
-using json = nlohmann::json;
 
 class Reader {
     public:
@@ -10,3 +12,5 @@ class Reader {
     private:
         void GetEntities(std::map<std::string, std::string>& entitites, std::string& sentence, std::string input);
 };
+
+#endif

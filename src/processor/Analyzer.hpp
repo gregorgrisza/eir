@@ -23,8 +23,7 @@ class Analyzer {
     public:
         void analyze(std::vector<IntentDefinition> const& data);
 
-        [[nodiscard("Intent must be consumed. If not found must be fallback returned.")]]
-        std::string predict(std::string const& sentence);
+        void predict(std::set<std::string> const&, std::string&);
 };
 
 #endif
