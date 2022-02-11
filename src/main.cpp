@@ -4,9 +4,9 @@
 #include <nlohmann/json.hpp>
 
 #include "spdlog/spdlog.h"
-#include "learning/Preprocessor.hpp"
-#include "learning/Reader.hpp"
-#include "learning/Analyzer.hpp"
+#include "processor/Preprocessor.hpp"
+#include "processor/Reader.hpp"
+#include "processor/Analyzer.hpp"
 
 
 int main(int argc, const char **argv)

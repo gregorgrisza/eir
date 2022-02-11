@@ -24,9 +24,9 @@ set(TARGET_SOURCES
     Reader.hpp
     Reader.cpp)
 
-add_library(learning
+add_library(processor
             ${TARGET_SOURCES})
 
-target_include_directories (learning PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories (processor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(learning PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(processor PRIVATE nlohmann_json::nlohmann_json)

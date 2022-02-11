@@ -1,5 +1,5 @@
 add_subdirectory(model)
-add_subdirectory(learning)
+add_subdirectory(processor)
 
 include(FetchContent)
 
@@ -41,7 +41,7 @@ target_link_libraries(
 
 target_link_libraries (
   eir
-  LINK_PUBLIC learning
+  LINK_PUBLIC processor
               model)
 
 target_link_libraries(
