@@ -17,7 +17,8 @@ int main(int argc, const char **argv)
   const auto file = "data/train_data.json";
   Analyzer analyzer = Analyzer();
   if (std::filesystem::exists(file)) {
-    analyzer.analyze(reader->read(file));
+    std::ifstream dataStream(file);
+    analyzer.analyze(reader->read(dataStream));
   }
 
   std::string sentence;

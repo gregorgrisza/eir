@@ -6,7 +6,7 @@ using json = nlohmann::json;
 
 class Reader {
     public:
-        std::vector<IntentDefinition> read(std::string file);
+        std::vector<IntentDefinition> read(std::ifstream &);
     private:
         void GetEntities(std::map<std::string, std::string>& entitites, std::string& sentence, std::string input);
 };

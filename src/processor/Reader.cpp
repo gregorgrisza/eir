@@ -5,10 +5,9 @@
 
 using json = nlohmann::json;
 
-std::vector<IntentDefinition> Reader::read(std::string file) {
-    std::ifstream data_stream(file);
+std::vector<IntentDefinition> Reader::read(std::ifstream & dataStream) {
     json json_data;
-    data_stream >> json_data;
+    dataStream >> json_data;
     std::vector<IntentDefinition> IntentDefinitions;
     for( const auto & item : json_data) {
         // std::cout << std::setw(4) << item << std::endl;
