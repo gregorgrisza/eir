@@ -4,9 +4,12 @@
 
 
 void Preprocessor::normalize(std::string& sentence) {
-    std::replace(sentence.begin(), sentence.end(), ',', ' '); 
     std::transform(sentence.begin(), sentence.end(), sentence.begin(),
         [](unsigned char c){ return std::tolower(c); });
+}
+
+void Preprocessor::removeStopWords(std::string& sentence) {
+    std::replace(sentence.begin(), sentence.end(), ',', ' ');
 }
 
 std::set<std::string> Preprocessor::tokenize( std::string sentence ) {
@@ -17,10 +20,7 @@ std::set<std::string> Preprocessor::tokenize( std::string sentence ) {
     return result;
 }
 
-std::set<std::string> Preprocessor::sanitize( std::set<std::string> const& sentence ) {
-    std::set<std::string> result;
-    for (std::string token : sentence)
-    {
+void Preprocessor::sanitize(std::string & token) {
         token.erase(
             std::remove_if(
                 token.begin(),
@@ -29,7 +29,13 @@ std::set<std::string> Preprocessor::sanitize( std::set<std::string> const& sente
                     return ::isdigit(ch) || ::ispunct(ch);
                 }
         ), token.end());
+}
 
+std::set<std::string> Preprocessor::sanitize( std::set<std::string> const& sentence ) {
+    std::set<std::string> result;
+    for (std::string token : sentence)
+    {
+        Preprocessor::sanitize(token);
         if (token.length() > 0 ) {
             result.insert(token);
         }

@@ -3,10 +3,18 @@
 
 #include <string>
 #include <map>
+#include <memory>
+#include <set>
+#include "EntityService.hpp"
+
 
 class EntityRecognizer {
     public:
-        void recognize(std::string sentence, std::map<std::string, std::string>& EntitiesConfigurations);
+        EntityRecognizer(std::shared_ptr<EntityService<std::string>>);
+        void recognize(std::string const&, std::map<std::string, std::string>&);
+
+    private:
+        std::shared_ptr<EntityService<std::string>> m_entityService;
 };
 
 #endif

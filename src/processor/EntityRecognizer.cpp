@@ -1,5 +1,11 @@
 #include "EntityRecognizer.hpp"
+#include "Preprocessor.hpp"
 
-void EntityRecognizer::recognize(std::string sentence, std::map<std::string, std::string>& EntitiesConfigurations) {
+EntityRecognizer::EntityRecognizer(std::shared_ptr<EntityService<std::string>> entityService)
+    : m_entityService(entityService) {}
 
+void EntityRecognizer::recognize(std::string const& sentence, std::map<std::string, std::string>& entitiesConfigurations) {
+    auto mySentence = sentence;
+
+    m_entityService->getEntities(Preprocessor::sanitize(Preprocessor::tokenize(mySentence)), entitiesConfigurations);
 }

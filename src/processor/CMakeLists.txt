@@ -23,6 +23,7 @@ set(TARGET_SOURCES
     Preprocessor.cpp
     Analyzer.hpp
     Analyzer.cpp
+    EntityService.hpp
     Reader.hpp
     Reader.cpp)
 

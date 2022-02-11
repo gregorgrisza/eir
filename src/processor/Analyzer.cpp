@@ -1,7 +1,8 @@
 
 #include "Analyzer.hpp"
 #include "Preprocessor.hpp"
-
+#include <exception>
+#include <sstream>
 
 void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
     for (auto item : data) {
@@ -13,6 +14,14 @@ void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
             for (auto word : words) {
                 auto in = ++m_bows[word][item.Intent];
             }
+        }
+        for (auto entity : item.EntitiesConfigurations) {
+            if (m_entitiesDb.contains(entity.second) && m_entitiesDb[entity.second] != entity.first) {
+                std::stringstream stream;
+                stream << "Word " << entity.second << " has multiple entity assignment: " <<  m_entitiesDb[entity.second] << ", " << entity.first;
+                throw stream.str();
+            }
+            m_entitiesDb[entity.second] = entity.first;
         }
     }
 
@@ -29,6 +38,18 @@ void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
 
         for (auto intent : m_intents) {
             m_globalWordStrengths[word.first][intent] = localStrengths[intent] / sumOfStrengths;
+        }
+    }
+}
+
+bool Analyzer::isEntity(std::string const& token) {
+    return m_entitiesDb.contains(token);
+}
+
+void Analyzer::getEntities(std::set<std::string> const& sentence, std::map<std::string, std::string>& entitiesConfigurations) {
+    for (auto word : sentence) {
+        if (m_entitiesDb.contains(word)) {
+            entitiesConfigurations[word] = m_entitiesDb[word];
         }
     }
 }

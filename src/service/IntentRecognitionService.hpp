@@ -6,6 +6,7 @@
 #include "../processor/IntentDefinition.hpp"
 #include "../processor/Analyzer.hpp"
 #include "../processor/Reader.hpp"
+#include "EntityRecognizer.hpp"
 
 class IntentRecognitionService {
     public:
@@ -13,7 +14,7 @@ class IntentRecognitionService {
         void init();
         IntentDefinition recognize(std::string sentence);
     private:
-        std::unique_ptr<Analyzer> m_analyzer;
+        std::shared_ptr<Analyzer> m_analyzer;
         std::unique_ptr<Reader> m_reader;
         std::unique_ptr<EntityRecognizer> m_recognizer;
 };
