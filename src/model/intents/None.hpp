@@ -5,6 +5,7 @@
 
 class None : public Intent {
     public:
+        None(const std::map<std::string, std::string>& entitiesConfigurations);
         static std::string ID;
         const std::string Name() override;
 };

@@ -25,7 +25,7 @@ class IntentBuilderProxy {
     };
 
     public:
-        std::unique_ptr<Intent> build(std::string intent, std::map<std::string, std::string> entitiesData);
+        std::unique_ptr<Intent> build(std::string const& intent, std::map<std::string, std::string> const& entitiesData);
 };
 
 #endif

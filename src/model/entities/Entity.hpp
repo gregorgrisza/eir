@@ -10,7 +10,7 @@ class Entity {
 
         Entity(const std::string & value);
         std::string Value;
-        virtual void executeAction();
+        // virtual void executeAction();
 };
 
 #endif

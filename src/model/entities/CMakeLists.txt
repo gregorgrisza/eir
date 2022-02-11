@@ -4,6 +4,8 @@ set(TARGET_SOURCES
     City.cpp
     Date.hpp
     Date.cpp
+    Location.hpp
+    Location.cpp
     EntityBuilderProxy.hpp
     EntityBuilderProxy.cpp
     Entity.hpp

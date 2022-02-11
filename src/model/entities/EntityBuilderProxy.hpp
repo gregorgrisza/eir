@@ -23,7 +23,7 @@ class EntityBuilderProxy {
     };
 
     public:
-        std::unique_ptr<Entity> build(std::tuple<std::string, std::string> configuration);
+        std::unique_ptr<Entity> build(std::pair<std::string, std::string> configuration);
 };
 
 #endif

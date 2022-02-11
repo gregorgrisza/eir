@@ -4,10 +4,10 @@ set(TARGET_SOURCES
     GetWeather.cpp
     GetFact.hpp
     GetFact.cpp
-    IntentsManager.hpp
-    IntentsManager.cpp
     None.hpp
     None.cpp
+    IntentBuilderProxy.hpp
+    IntentBuilderProxy.cpp
     Intent.hpp
     Intent.cpp)
 

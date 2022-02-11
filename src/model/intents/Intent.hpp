@@ -11,7 +11,7 @@ class Intent {
 
         Intent(const std::map<std::string, std::string>& entitiesConfigurations);
 
-        void execute();
+        std::string execute();
 };
 
 #endif

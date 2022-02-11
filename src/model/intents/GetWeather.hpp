@@ -7,11 +7,12 @@
 #include "../entities/Date.hpp"
 
 class GetWeather : public Intent {
-    const std::string Name() override;
     std::unique_ptr<Date> Dat;
     std::unique_ptr<Location> Loc;
 
     public:
+        GetWeather(const std::map<std::string, std::string>& entitiesConfigurations);
+        const std::string Name() override;
         static std::string ID;
 };
 

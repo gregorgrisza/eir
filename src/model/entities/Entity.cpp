@@ -1,6 +1,4 @@
 
 #include "Entity.hpp"
 
-Entity::Entity(std::string const & value) {
-    this->Value = value;
-}
+Entity::Entity(std::string const & value) : Value(value) {}
