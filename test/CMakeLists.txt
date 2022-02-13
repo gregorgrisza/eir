@@ -19,7 +19,7 @@ add_library(catch_main OBJECT catch_main.cpp)
 target_link_libraries(catch_main PUBLIC Catch2::Catch2WithMain)
  # target_link_libraries(catch_main PRIVATE project_options)
 
-add_executable(tests tests.cpp processor.cpp)
+add_executable(tests recognition.cpp processor.cpp)
 target_link_libraries(
     tests
     catch_main
