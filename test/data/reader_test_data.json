@@ -1,0 +1,17 @@
+[
+    {
+        "input" :
+            [
+                "What is the weather like [today](Date)?",
+                "What is the weather like in [Paris](City) [today](Date)?"
+            ],
+        "intent" : "Get Weather"
+    },
+    {
+        "input" :
+            [
+                "Tell me an interesting fact."
+            ],
+        "intent" : "Get Fact"
+    }
+]

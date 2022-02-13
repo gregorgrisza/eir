@@ -1,5 +1,6 @@
 #include <catch2/catch_all.hpp>
 #include "../src/processor/Preprocessor.hpp"
+#include "../src/processor/Reader.hpp"
 
 TEST_CASE("Normalize sentence", "[normalize]")
 {
@@ -53,4 +54,27 @@ TEST_CASE("Tokenize sentence", "[tokenize]")
     std::set<std::string> tokens = {"Tokenize1%", "m-e"};
     REQUIRE(Preprocessor::tokenize(sentence) == tokens);
   }
+}
+
+TEST_CASE("Read learn data", "[read]")
+{
+  SECTION("Read") {
+    auto sut = Reader();
+    auto data = sut.read("test/data/reader_test_data.json");
+    auto firstIntent = data.at(0);
+    auto secondIntent = data.at(1);
+
+    REQUIRE(data.size() == 2);
+    REQUIRE(firstIntent.Intent == "Get Weather");
+    REQUIRE(firstIntent.Input[0] == "What is the weather like today?");
+    REQUIRE(firstIntent.Input[1] == "What is the weather like in Paris today?");
+    REQUIRE(firstIntent.EntitiesConfigurations.size() == 2);
+    REQUIRE(firstIntent.EntitiesConfigurations["City"] == "Paris");
+    REQUIRE(firstIntent.EntitiesConfigurations["Date"] == "today");
+
+    REQUIRE(secondIntent.Intent == "Get Fact");
+    REQUIRE(secondIntent.Input[0] == "Tell me an interesting fact.");
+    REQUIRE(secondIntent.EntitiesConfigurations.size() == 0);
+  }
+
 }
