@@ -1,6 +1,6 @@
 # Embedded Intent Recognizer
 
-Small intent recognition command line tool.
+Naive intent recognition command line tool.
 
 
 ## Repository
@@ -10,25 +10,98 @@ Small intent recognition command line tool.
 ```
 git clone git@github.com:gregorgrisza/eir.git
 ```
+## Description
+### What does it do?
+
+Program intends to recognize User intention by entered sentence.
+
+### How?
+
+Program has own database of sentences with defined corresponding intent.
+
+It's naive recognition based on bags of cleaned/sanitized words with cross calculated ranking value for each word on several levels.
+which introduces some limitation when there is not enough learn data, or there is too much learned data, e.g. in situation where sentence is long and consists
+many words which appear in other sentences as well, but with different meaning (intention expressed).
+
+### Limitations
+
+Algorithm of recognition is very naive and doesn't have:
+
+- stemming, lemmatization
+- language specific recognition
+- semantics handling
+- generic entities recognition
+- ...
 
 
-## Example:
+## Usage
+
+```
+cd ${ProjectRoot}
+./build/src/eir
+```
+---
+**NOTE**
+
+Program needs to be executed from directory level where is accessible relatively `data/train_data.json` file from.
+
+---
+
+
+### User interaction
+
+During program run User needs to enter sentence and confirm with `Enter` key.
+
+Confirmation of empty line finishes program run.
+
+Interruption using Ctrl^C also finishes program, but return code is not successful.
 
 ```
 What is the weather like today? => Prints (Intent: Get Weather)
 What is the weather like in Paris today? => Prints (Intent: Get Weather City)
 Tell me an interesting fact. => Prints (Intent: Get Fact)
+
+Bye Bye!
 ```
 
-#### Docker
-We have a Docker image that's already set up for you. See the [Docker instructions](#docker-instructions).
+### Learning
 
-#### Setup
+Learn process is done at runtime and is based on learn data definition.
 
-We have [setup-cpp](https://github.com/aminya/setup-cpp) that is a cross-platform tool to install all the compilers and dependencies on the system.
+Learn data definition is database of examples with defined intentions information as follows:
 
-Please check [the setup-cpp documentation](https://github.com/aminya/setup-cpp) for more information.
+```
+    {
+        "input" :
+            [
+                "What is the weather like [today](Date)?",
+                "What is the weather like in [Paris](City) [today](Date)?"
+            ],
+        "intent" : "Get Weather"
+    },
+```
 
+#### `input` section
+
+`input` section defines list od possible sentences with defined entities.
+
+Each sentence will be calculated as probe by Analyzer.
+
+Each word will be calculated and stored in bags of words for each `intent`
+
+#### Entities definition
+
+Entities are defined in `input` section in each sentence/item.
+
+Each entity has structure: `[word](Type)`
+
+`word` is possible value which will be recognized as being of type `Type`, where each `Type` is mapped to implementation/class.
+
+#### `intent` section
+
+`intent` defines intent id matched in code and implementing intent behavior. 
+
+## Setup development environment
 
 ### Necessary Dependencies
 1. A C++ compiler that supports C++17.
@@ -44,13 +117,6 @@ The following compilers should work:
 
 			sudo apt install build-essential
 
-	- Windows:
-
-			choco install mingw -y
-
-	- MacOS:
-
-			brew install gcc
 	</details>
 
   * [clang 6+](https://clang.llvm.org/)
@@ -61,69 +127,9 @@ The following compilers should work:
 
 			bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
-	- Windows:
-
-		Visual Studio 2019 ships with LLVM (see the Visual Studio section). However, to install LLVM separately:
-
-			choco install llvm -y
-
-		llvm-utils for using external LLVM with Visual Studio generator:
-
-			git clone https://github.com/zufuliu/llvm-utils.git
-			cd llvm-utils/VS2017
-			.\install.bat
-
-	- MacOS:
-
-			brew install llvm
 	</details>
 
-  * [Visual Studio 2019 or higher](https://visualstudio.microsoft.com/)
-	<details>
-	<summary>Install command + Environment setup</summary>
-
-	On Windows, you need to install Visual Studio 2019 because of the SDK and libraries that ship with it.
-
-  	Visual Studio IDE - 2019 Community (installs Clang too):
-
-  	  	choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
-
-	Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
-
-			choco install vswhere -y
-			refreshenv
-
-			# change to x86 for 32bit
-			$clpath = vswhere -products * -latest -prerelease -find **/Hostx64/x64/*
-			$clangpath = vswhere -products * -latest -prerelease -find **/Llvm/bin/*
-			$vcvarsallpath =  vswhere -products * -latest -prerelease -find **/Auxiliary/Build/*
-
-			$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-			[Environment]::SetEnvironmentVariable("Path", $path + ";$clpath" + ";$clangpath" + ";$vcvarsallpath", "User")
-			refreshenv
-
-	</details>
-
-
-2. [Conan](https://conan.io/)
-	<details>
-	<summary>Install Command</summary>
-
-	- Via pip - https://docs.conan.io/en/latest/installation.html#install-with-pip-recommended
-
-			pip install --user conan
-
-	- Windows:
-
-			choco install conan -y
-
-	- MacOS:
-
-			brew install conan
-
-	</details>
-
-3. [CMake 3.15+](https://cmake.org/)
+1. [CMake 3.15+](https://cmake.org/)
 	<details>
 	<summary>Install Command</summary>
 
@@ -152,16 +158,6 @@ The following compilers should work:
 			sudo apt-get install doxygen
 			sudo apt-get install graphviz
 
-	- Windows:
-
-			choco install doxygen.install -y
-			choco install graphviz -y
-
-	- MacOS:
-
-			brew install doxygen
-	 		brew install graphviz
-
 	</details>
 
 
@@ -173,14 +169,6 @@ The following compilers should work:
 
 			sudo apt-get install ccache
 
-	- Windows:
-
-			choco install ccache -y
-
-	- MacOS:
-
-			brew install ccache
-
 	</details>
 
 
@@ -191,25 +179,6 @@ The following compilers should work:
 	- Debian/Ubuntu:
 
 			sudo apt-get install cppcheck
-
-	- Windows:
-
-			choco install cppcheck -y
-
-	- MacOS:
-
-			brew install cppcheck
-
-	</details>
-
-
-  * [include-what-you-use](https://include-what-you-use.org/)
-	<details>
-	<summary>Install Command</summary>
-
-	Follow instructions here:
-	https://github.com/include-what-you-use/include-what-you-use#how-to-install
-	</details>
 
 
 ## Build Instructions
@@ -261,35 +230,6 @@ CMake will detect which compiler was used to build each of the Conan targets. If
 
 		Save and close the file.
 
-- Windows:
-
-	- Permanent:
-
-		Run one of the followings in PowerShell:
-
-		- Visual Studio generator and compiler (cl)
-
-				[Environment]::SetEnvironmentVariable("CC", "cl.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "cl.exe", "User")
-				refreshenv
-
-		  Set the architecture using [vcvarsall](https://docs.microsoft.com/en-us/cpp/build/building-on-the-command-line?view=vs-2019#vcvarsall-syntax):
-
-				vcvarsall.bat x64
-
-		- clang
-
-				[Environment]::SetEnvironmentVariable("CC", "clang.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "clang++.exe", "User")
-				refreshenv
-
-		- gcc
-
-				[Environment]::SetEnvironmentVariable("CC", "gcc.exe", "User")
-				[Environment]::SetEnvironmentVariable("CXX", "g++.exe", "User")
-				refreshenv
-
-
   - Temporarily (only for the current shell):
 
 			$Env:CC="clang.exe"
@@ -306,85 +246,9 @@ To configure the project, you could use `cmake`
 Cmake will automatically create the `./build` folder if it does not exist, and it wil configure the project.
 
 or
+
 	mkdir build && cd build && cmake ..
 
 
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
-
-## Fuzz testing
-
-See [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
-
-
-## Docker Instructions
-
-If you have [Docker](https://www.docker.com/) installed, you can run this
-in your terminal, when the Dockerfile is in your working directory:
-
-```bash
-docker build --tag=my_project:latest .
-docker run -it my_project:latest
-```
-
-This command will put you in a `bash` session in a Ubuntu 18.04 Docker container,
-with all of the tools listed in the [Dependencies](#dependencies) section already installed.
-Additionally, you will have `g++-10` and `clang++-11` installed as the default
-versions of `g++` and `clang++`.
-
-If you want to build this container using some other versions of gcc and clang,
-you may do so with the `GCC_VER` and `LLVM_VER` arguments:
-
-```bash
-docker build --tag=myproject:latest --build-arg GCC_VER=9 --build-arg LLVM_VER=10 .
-```
-
-The CC and CXX environment variables are set to GCC version 10 by default.
-If you wish to use clang as your default CC and CXX environment variables, you
-may do so like this:
-
-```bash
-docker build --tag=my_project:latest --build-arg USE_CLANG=1 .
-```
-
-You will be logged in as root, so you will see the `#` symbol as your prompt.
-You will be in a directory that contains a copy of the `cpp_starter_project`;
-any changes you make to your local copy will not be updated in the Docker image
-until you rebuild it.
-If you need to mount your local copy directly in the Docker image, see
-[Docker volumes docs](https://docs.docker.com/storage/volumes/).
-TLDR:
-
-```bash
-docker run -it \
-	-v absolute_path_on_host_machine:absolute_path_in_guest_container \
-	my_project:latest
-```
-
-You can configure and build [as directed above](#build) using these commands:
-
-```bash
-/starter_project# mkdir build
-/starter_project# cmake -S . -B ./build
-/starter_project# cmake --build ./build
-```
-
-You can configure and build using `clang-11`, without rebuilding the container,
-with these commands:
-
-```bash
-/starter_project# mkdir build
-/starter_project# CC=clang CXX=clang++ cmake -S . -B ./build
-/starter_project# cmake --build ./build
-```
-
-The `ccmake` tool is also installed; you can substitute `ccmake` for `cmake` to
-configure the project interactively.
-All of the tools this project supports are installed in the Docker image;
-enabling them is as simple as flipping a switch using the `ccmake` interface.
-Be aware that some of the sanitizers conflict with each other, so be sure to
-run them separately.
-
-A script called `build_examples.sh` is provided to help you to build the example
-GUI projects in this container.
-
