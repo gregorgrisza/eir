@@ -81,7 +81,7 @@ TEST_CASE("Two learned with common words prediction", "[Analyzer]")
     std::string intent;
     sut.analyze(intentDefintions);
     sut.predict({"Tell", "some", "fact"}, intent);
-    REQUIRE(intent == None::ID);
+    REQUIRE(intent == GetFact::ID);
   }
 }
 
