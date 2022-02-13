@@ -70,7 +70,7 @@ TEST_CASE("Two learned with common words prediction", "[Analyzer]")
     REQUIRE(intent == GetWeather::ID);
   }
 
-  SECTION("Part match"){
+  SECTION("Part match with more important word"){
     std::string intent;
     sut.analyze(intentDefintions);
     sut.predict({"What", "is", "the", "fact"}, intent);
