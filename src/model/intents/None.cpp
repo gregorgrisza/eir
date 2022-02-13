@@ -3,6 +3,8 @@
 
 None::None(const std::map<std::string, std::string>& entitiesConfigurations) : Intent(entitiesConfigurations) {}
 
+None::~None() {}
+
 const std::string None::Name() {
     return None::ID;
 }

@@ -3,6 +3,8 @@
 
 GetFact::GetFact(const std::map<std::string, std::string>& entitiesConfigurations) : Intent(entitiesConfigurations) {}
 
+GetFact::~GetFact() {}
+
 const std::string GetFact::Name() {
     return GetFact::ID;
 }

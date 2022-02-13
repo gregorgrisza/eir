@@ -12,6 +12,7 @@ class GetWeather : public Intent {
 
         static std::string ID;
         std::string execute() override;
+        virtual ~GetWeather();
 };
 
 #endif

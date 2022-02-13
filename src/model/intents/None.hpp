@@ -10,6 +10,7 @@ class None : public Intent {
         static std::string ID;
         const std::string Name() override;
         std::string execute() override;
+        virtual ~None();
 };
 
 #endif

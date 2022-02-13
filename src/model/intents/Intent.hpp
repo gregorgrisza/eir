@@ -13,6 +13,7 @@ class Intent {
 
         virtual const std::string Name() = 0;
         virtual std::string execute() = 0;
+        virtual ~Intent() = 0;
 
     protected:
         std::string prefix();

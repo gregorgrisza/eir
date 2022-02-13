@@ -5,6 +5,8 @@
 
 GetWeather::GetWeather(const std::map<std::string, std::string>& entitiesConfigurations) : Intent(entitiesConfigurations) {}
 
+GetWeather::~GetWeather() {}
+
 const std::string GetWeather::Name() {
     return GetWeather::ID;
 }

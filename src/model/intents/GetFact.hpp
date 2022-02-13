@@ -10,6 +10,7 @@ class GetFact : public Intent {
         const std::string Name() override;
         static std::string ID;
         std::string execute() override;
+        virtual ~GetFact();
 };
 
 #endif

@@ -6,6 +6,8 @@ Intent::Intent(const std::map<std::string, std::string>& entitiesData) {
     EntitiesConfigurations = entitiesData;
 }
 
+Intent::~Intent() {}
+
 std::string Intent::prefix() {
     return "Intent: ";
 }
