@@ -11,7 +11,7 @@
 class IntentRecognitionService {
     public:
         IntentRecognitionService();
-        void init();
+        void init(std::string filePath = {});
         IntentDefinition recognize(std::string sentence);
     private:
         std::shared_ptr<Analyzer> m_analyzer;

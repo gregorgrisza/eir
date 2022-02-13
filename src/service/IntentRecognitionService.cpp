@@ -12,8 +12,8 @@ IntentRecognitionService::IntentRecognitionService()
           )
         ) {}
 
-void IntentRecognitionService::init() {
-  const auto file = "data/train_data.json";
+void IntentRecognitionService::init(std::string filePath) {
+  const auto file = filePath.empty() ? "data/train_data.json" : filePath;
   if (std::filesystem::exists(file)) {
     m_analyzer->analyze(m_reader->read(file));
   }

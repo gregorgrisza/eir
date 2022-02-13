@@ -3,6 +3,7 @@
 #include "Preprocessor.hpp"
 #include <exception>
 #include <sstream>
+#include "../model/intents/None.hpp"
 
 void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
     for (auto item : data) {
@@ -76,6 +77,10 @@ void Analyzer::predict(std::set<std::string> const& words, std::string& intent) 
     // TODO: try: find unique words, which exist only in one intent, so others could be ignored (?)
 
     intent = getKeyWithMaxValue(intentRating);
+
+    if (intent.empty()) {
+        intent = None::ID;
+    }
 }
 
 //TODO: move templated to utilities
