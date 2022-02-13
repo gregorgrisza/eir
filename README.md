@@ -252,3 +252,17 @@ or
 
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+
+## TODOs
+
+1. Organize code into namespaces
+2. Refactor Preprocessor into Chain of responsibility pattern
+3. Add type names to increase readability, mostly for learn data type, e.g. `std::map<std::string, std::map<std::string, int>>` should be 
+more like e.g. `std::map<Word, CountForIntent>`
+4. Implement key words handling and acceptance threshold for assigning to Intent.
+Problem exist in recognizing by words which exist in more than one Intent, so are not so important, 
+or even doesn't have meaning, e.g. "what", "is", "the", "Tell". In this case, if there are only 
+those words entered, Intent cannot be chosen. This problem might be also resolved by comparing 
+importance of words and checking coverage of words for particular sentence.
+4. Update comments.
+5. Exceptions handling, e.g. for currupted learn data in JSON.
