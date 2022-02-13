@@ -28,6 +28,9 @@ target_link_libraries(
     processor
     service)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/train_data.json ${CMAKE_CURRENT_SOURCE_DIR}/data/reader_test_data.json
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 # automatically discover tests that are defined in catch based test files you can modify the unittests. Set TEST_PREFIX
 # to whatever you want, or use different for different binaries
 catch_discover_tests(

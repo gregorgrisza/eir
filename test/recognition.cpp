@@ -88,7 +88,7 @@ TEST_CASE("Two learned with common words prediction", "[Analyzer]")
 TEST_CASE("Corrupted input prediction", "[IntentRecognitionService]")
 {
   auto sut = IntentRecognitionService();
-  sut.init("test/data/train_data.json");
+  sut.init("train_data.json");
 
   SECTION("Digits inside"){
     std::string intent;

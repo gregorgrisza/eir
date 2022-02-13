@@ -60,7 +60,7 @@ TEST_CASE("Read learn data", "[read]")
 {
   SECTION("Read") {
     auto sut = Reader();
-    auto data = sut.read("test/data/reader_test_data.json");
+    auto data = sut.read("reader_test_data.json");
     auto firstIntent = data.at(0);
     auto secondIntent = data.at(1);
 
