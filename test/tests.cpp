@@ -1,14 +1,20 @@
 #include <catch2/catch_all.hpp>
-
-unsigned int Factorial(unsigned int number)// NOLINT(misc-no-recursion)
-{
-  return number <= 1 ? number : Factorial(number - 1) * number;
-}
+#include "../src/processor/Analyzer.hpp"
 
 TEST_CASE("Factorials are computed", "[factorial]")
 {
-  REQUIRE(Factorial(1) == 1);
-  REQUIRE(Factorial(2) == 2);
-  REQUIRE(Factorial(3) == 6);
-  REQUIRE(Factorial(10) == 3628800);
+  auto sut = Analyzer();
+  auto intentDefinition = IntentDefinition();
+  intentDefinition.Input.push_back("What is the weather today?");
+  intentDefinition.Intent = "Get Weather";
+  intentDefinition.EntitiesConfigurations["Paris"] = "City";
+
+  std::vector<IntentDefinition> intentDefintions{
+    intentDefinition
+  };
+
+  std::string intent;
+  sut.analyze(intentDefintions);
+  sut.predict({"What", "is", "the", "weather", "today?"}, intent);
+  REQUIRE(intent == intentDefinition.Intent);
 }
