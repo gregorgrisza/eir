@@ -11,7 +11,6 @@ std::vector<IntentDefinition> Reader::read(std::string file) {
     data_stream >> json_data;
     std::vector<IntentDefinition> IntentDefinitions;
     for( const auto & item : json_data) {
-        // std::cout << std::setw(4) << item << std::endl;
         IntentDefinition IntentDefinition;
         IntentDefinition.Intent = item["intent"];
         for( const auto &input : item["input"]) {

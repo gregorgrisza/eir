@@ -1,10 +1,8 @@
 #ifndef GETWEATHER_H
 #define GETWEATHER_H
 
-#include <memory>
 #include "Intent.hpp"
-#include "../entities/City.hpp"
-#include "../entities/Date.hpp"
+
 
 class GetWeather : public Intent {
 

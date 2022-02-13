@@ -1,7 +1,6 @@
 #ifndef GETFACT_H
 #define GETFACT_H
 
-#include <memory>
 #include <string>
 #include "Intent.hpp"
 

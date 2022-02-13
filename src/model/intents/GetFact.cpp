@@ -1,7 +1,5 @@
 #include <sstream>
-#include <memory>
 #include "GetFact.hpp"
-#include "../entities/Entity.hpp"
 
 GetFact::GetFact(const std::map<std::string, std::string>& entitiesConfigurations) : Intent(entitiesConfigurations) {}
 
