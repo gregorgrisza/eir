@@ -1,4 +1,7 @@
+#include <sstream>
 #include "GetWeather.hpp"
+#include "../entities/City.hpp"
+
 
 GetWeather::GetWeather(const std::map<std::string, std::string>& entitiesConfigurations) : Intent(entitiesConfigurations) {}
 
@@ -7,3 +10,15 @@ const std::string GetWeather::Name() {
 }
 
 std::string GetWeather::ID = "Get Weather";
+
+std::string GetWeather::execute() {
+    std::stringstream stream;
+    std::unique_ptr<std::pair<std::string, std::string>> entityDefinition = getEntityDefinition(City::ID);
+    std::string cityInfo;
+    if (entityDefinition != nullptr) {
+        auto city = City(entityDefinition->first);
+        cityInfo += " " + city.Name();
+    }
+    stream << prefix() << this->Name() << cityInfo;
+    return stream.str();
+}

@@ -1,5 +1,5 @@
-#ifndef ENTITYBUILDERPROXY_H
-#define ENTITYBUILDERPROXY_H
+#ifndef INTENTBUILDERPROXY_H
+#define INTENTBUILDERPROXY_H
 
 #include <tuple>
 #include <string>
@@ -19,13 +19,14 @@ using TypesMap = std::map<std::string, std::function<std::unique_ptr<Intent>(std
 class IntentBuilderProxy {
 
     const TypesMap Creators = {
-        {GetWeather::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<Intent> { return std::make_unique<GetWeather>(value); } },
-        {GetFact::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<Intent> { return std::make_unique<GetFact>(value); } },
-        {None::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<Intent> { return std::make_unique<GetFact>(value); } },
+        {GetWeather::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<GetWeather> { return std::make_unique<GetWeather>(value); } },
+        {GetFact::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<GetFact> { return std::make_unique<GetFact>(value); } },
+        {None::ID, [](std::map<std::string, std::string> const & value) -> std::unique_ptr<None> { return std::make_unique<None>(value); } },
     };
 
     public:
         std::unique_ptr<Intent> build(std::string const& intent, std::map<std::string, std::string> const& entitiesData);
+
 };
 
 #endif

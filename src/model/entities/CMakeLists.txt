@@ -6,8 +6,6 @@ set(TARGET_SOURCES
     Date.cpp
     Location.hpp
     Location.cpp
-    EntityBuilderProxy.hpp
-    EntityBuilderProxy.cpp
     Entity.hpp
     Entity.cpp)
 

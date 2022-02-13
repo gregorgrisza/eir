@@ -20,7 +20,7 @@ int main(int argc, const char **argv)
     std::string output;
     auto intentDefinition = service->recognize(sentence);
     auto intent = IntentBuilderProxy().build(intentDefinition.Intent, intentDefinition.EntitiesConfigurations);
-    std::cout << "\033[F" << sentence << " => " << intent->execute() << std::endl;
+    std::cout << "\033[F" << sentence << " => Prints (" << intent->execute() << ")" << std::endl;
   }
 
   std:: cout << "Bye Bye!" << std::endl;
