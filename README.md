@@ -253,6 +253,16 @@ or
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
 
+### Tests execution
+
+```
+(cd ./build && ctest -C Debug)
+```
+or
+```
+(cd ./build/test && ./test)
+```
+
 ## TODOs
 
 1. Organize code into namespaces
