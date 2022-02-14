@@ -1,0 +1,4 @@
+<map id="Location" name="Location">
+<area shape="rect" id="node3" href="$classCity.html" title="City" alt="" coords="17,155,64,181"/>
+<area shape="rect" id="node2" href="$classEntity.html" title="Entity object defines recognized part of sentence. It&#39;s an optional parameter for Intent consumed dur..." alt="" coords="13,5,69,32"/>
+</map>

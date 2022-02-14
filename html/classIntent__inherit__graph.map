@@ -1,0 +1,5 @@
+<map id="Intent" name="Intent">
+<area shape="rect" id="node2" href="$classGetFact.html" title="GetFact" alt="" coords="5,80,75,107"/>
+<area shape="rect" id="node3" href="$classGetWeather.html" title="GetWeather" alt="" coords="99,80,191,107"/>
+<area shape="rect" id="node4" href="$classNone.html" title="None" alt="" coords="216,80,269,107"/>
+</map>
