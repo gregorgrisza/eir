@@ -43,10 +43,6 @@ void Analyzer::analyze(std::vector<IntentDefinition> const& data) {
     }
 }
 
-bool Analyzer::isEntity(std::string const& token) {
-    return m_entitiesDb.contains(token);
-}
-
 void Analyzer::getEntities(std::set<std::string> const& sentence, std::map<std::string, std::string>& entitiesConfigurations) {
     for (auto word : sentence) {
         if (m_entitiesDb.contains(word)) {
@@ -111,11 +107,4 @@ float Analyzer::localStrength(std::string intent, std::string word) {
     auto countOfWord = m_bows[word][intent];
     auto countOfProbes = m_probes[intent];
     return float(countOfWord) / float(countOfProbes);
-}
-
-void Analyzer::globalStrengths(std::string word){
-    float sumOfLocalStrengths;
-    for (auto intent : m_intents) {
-
-    }
 }

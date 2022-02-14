@@ -16,6 +16,13 @@
 using TypesMap = std::map<std::string, std::function<std::unique_ptr<Intent>(std::map<std::string, std::string> const &)>>;
 
 // TODO: make it singleton
+
+/**
+ * @brief Builder for all known Intents.
+ *
+ * Requires Intent::ID parameter defined in each Intent class.
+ * Intent::ID must be defined in train data definition.
+ */
 class IntentBuilderProxy {
 
     const TypesMap Creators = {
@@ -25,6 +32,14 @@ class IntentBuilderProxy {
     };
 
     public:
+
+        /**
+         * @brief Build main method for Intents creation.
+         *
+         * @param intent Unique Intent identifier
+         * @param entitiesData Entities data configuration.
+         * @return std::unique_ptr<Intent>
+         */
         std::unique_ptr<Intent> build(std::string const& intent, std::map<std::string, std::string> const& entitiesData);
 
 };

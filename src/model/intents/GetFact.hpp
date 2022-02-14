@@ -6,9 +6,10 @@
 
 class GetFact : public Intent {
     public:
+        static std::string ID;
+
         GetFact(const std::map<std::string, std::string>& entitiesConfigurations);
         const std::string Name() override;
-        static std::string ID;
         std::string execute() override;
         virtual ~GetFact();
 };
